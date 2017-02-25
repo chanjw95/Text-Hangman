@@ -1,0 +1,28 @@
+Hangman Protocol
+------- --------
+
+Server responses to client requests are newline-terminated byte streams.
+
+When a client first contacts the server, the server sends an
+identifying header line, such as
+
+  Hangman Server (10 March 2004). Type "HELP" for help.
+
+The server responds to client requests as follows:
+
+HELP    server sends a help message
+
+NEW	server responds by sending the byte stream representation of an int:
+  	  the number of letters in the word
+
+GUESS x guesses the letter "x"
+	server responds with a stream (one per character in the word)
+ 	  of (the byte string representation of) booleans, with the Ith 
+          being true or false, according as whether or not the letter
+          guessed matches the Ith character of the word
+
+QUIT	quits the game (for this particular word)
+	server responds with a byte stream, which is the word for the game
+
+BYE	disconnects from the server
+	server does not send a response
